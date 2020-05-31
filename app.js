@@ -4,6 +4,8 @@ const mongoose = require('mongoose')
 
 const app = express();
 
+const userRoutes = require('./routes/user')
+
 mongoose.connect(
     "mongodb+srv://helloibk:global-asset@2020@cluster0-gkt8h.mongodb.net/test?retryWrites=true&w=majority"
   , {useNewUrlParser: true, useUnifiedTopology: true})
@@ -20,6 +22,8 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     next();
   });
+
+  app.use('/api/auth', userRoutes)
 
   app.use(bodyParser.json());
 
