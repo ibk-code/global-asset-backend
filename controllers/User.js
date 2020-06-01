@@ -22,11 +22,12 @@ exports.signup = (req, res, next) => {
                 }
             ).catch
         })
+        console.log("I ran signup")
 }
 
 
 exports.login = (req, res, next) => {
-    UserLogin.findOne({email: req.body.email}).then(
+    UserSignUp.findOne({email: req.body.email}).then(
         (user) => {
             if(!user){
                 return res.status(401).json({
