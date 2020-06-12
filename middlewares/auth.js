@@ -5,14 +5,19 @@ module.exports = (req, res, next) => {
         const token = req.headers.authorization.split(' ')[1];
         const decodedToken = jwt.verify(token, 'GLOBAL-ASSET-BTC-TOKEN');
         const userId = decodedToken.userId;
+        const exp = decodedToken.expiresIn
         if(req.body.userId && req.body.userId !== userId) {
-            throw 'Invalid user ID';
+            if (Date.now() >= exp * 1000) {
+                res.status(400).json({
+                    message: "Token timed out. Login again"
+                });
+            }
         }else{
             next();
         }
     }catch {
         res.status(401).json({
-            error: new Error('Invalid request')
+            message: "User is unautorized"
         });
     }
 };
