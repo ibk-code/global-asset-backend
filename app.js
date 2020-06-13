@@ -8,9 +8,7 @@ let backup = require('./backup');
 const app = express();
 
 const userRoutes = require('./routes/user');
-const userUpdate = require('./routes/userAdmin');
 const cronIncrementFunc = require('./controllers/percentIncrease');
-const adminCreation = require('./controllers/AdminLogin')
 const adminQuery = require('./routes/adminRoutes')
 const userWithdraw = require('./routes/withdraw');
 const userContact = require('./routes/contact');
@@ -40,8 +38,6 @@ app.use((req, res, next) => {
     cronIncrementFunc.dayPlan();
   })
 
-  // adminCreation.signup('John Doe', 'john@globalassets.com', 'globalassets@2020')
-
   cron.schedule("0  12 * * *", () => {
     cronIncrementFunc.threeDaysPlan();
   })
@@ -54,7 +50,7 @@ app.use((req, res, next) => {
     cronIncrementFunc.traderPlan();
   })
 
-  cron.schedule("52 11 * * *", () => {
+  cron.schedule("10 18 * * *", () => {
     console.log("i ran backup");
     backup.backUp();
   })
