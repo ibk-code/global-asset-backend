@@ -3,6 +3,7 @@ const bodyParser =  require('body-parser')
 const mongoose = require('mongoose');
 const cron = require('node-cron');
 require('dotenv').config()
+let backup = require('./backup');
 
 const app = express();
 
@@ -10,6 +11,7 @@ const userRoutes = require('./routes/user');
 const userUpdate = require('./routes/userAdmin');
 const cronIncrementFunc = require('./controllers/percentIncrease');
 const adminCreation = require('./controllers/AdminLogin')
+const adminQuery = require('./routes/adminRoutes')
 const userWithdraw = require('./routes/withdraw');
 const userContact = require('./routes/contact');
 
@@ -40,26 +42,29 @@ app.use((req, res, next) => {
 
   // adminCreation.signup('John Doe', 'john@globalassets.com', 'globalassets@2020')
 
-  // cron.schedule("* 1 * * * *", () => {
-  //   console.log("i ran")
-  //   cronIncrementFunc.threeDaysPlan();
-  // })
+  cron.schedule("0  12 * * *", () => {
+    cronIncrementFunc.threeDaysPlan();
+  })
 
-  // cron.schedule("* 1 * * * *", () => {
-  //   console.log("i ran")
-  //   cronIncrementFunc.goldPlan();
-  // })
+  cron.schedule("0 12 * * *", () => {
+    cronIncrementFunc.goldPlan();
+  })
 
-  // cron.schedule("* 1 * * * *", () => {
-  //   console.log("i ran")
-  //   cronIncrementFunc.traderPlan();
-  // })
+  cron.schedule("0 12 * * *", () => {
+    cronIncrementFunc.traderPlan();
+  })
+
+  cron.schedule("52 11 * * *", () => {
+    console.log("i ran backup");
+    backup.backUp();
+  })
 
 
   app.use('/api/auth', userRoutes);
-  app.use('/api/update', userUpdate);
+  // app.use('/api/update', userUpdate);
   app.use('/api/user', userWithdraw);
   app.use('/api/user', userContact);
+  app.use('/api/admin', adminQuery);
 
 
   module.exports = app;

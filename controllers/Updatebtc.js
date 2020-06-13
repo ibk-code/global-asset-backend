@@ -1,7 +1,7 @@
 const UserSignUp = require('../models/signUp');
 const jwt = require('jsonwebtoken');
 
-exports.UpdateBalance = (req, res, next) => {
+exports.UpdateBalance = (req, resp, next) => {
     const userId = {_id: req.body.id}
     UserSignUp.findById(userId._id)
         .then(res =>{
@@ -14,11 +14,11 @@ exports.UpdateBalance = (req, res, next) => {
             const depositString = newDeposit.toString();
             UserSignUp.findByIdAndUpdate(userId, {$set: {btcBalance: balcString, "status.deposit": depositString}}, { useFindAndModify: false },  (upadateErr, updateRes) => {
                 if (upadateErr) {
-                    res.status(400).json({
+                    resp.status(400).json({
                         message: "An error occured updating btc balance"
                     })
                 }else{
-                    res.status(200).json({
+                    resp.status(200).json({
                         message: "Added to user bitcoin",
                         
                     })

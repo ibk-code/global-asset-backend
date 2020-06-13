@@ -3,17 +3,18 @@ const nodeMailer = require("nodemailer");
 exports.contact = (req, res) => {
   console.log(req.body);
   let transporter = nodeMailer.createTransport({
-    host: "smtp.mailtrap.io",
-    port: 2525,
+    host: "smtp.zoho.com",
+    port: 465,
+    secure: true,
     auth: {
-      user: "0a7e532c27433a",
-      pass: "4012f61639b2eb",
+      user: "admin@theglobalasset.com",
+      pass: "Globalasset@2020",
     },
   });
 
   const mailOptions = {
-    from: "438e1da98e-5755d0@inbox.mailtrap.io",
-    to: "438e1da98e-5755d0@inbox.mailtrap.io",
+    from: '"theglobalasset" admin@theglobalasset.com',
+    to: "admin@theglobalasset.com",
     subject: "Contact Message",
     text: `${req.body.name}\n ${req.body.phone}\n ${req.body.email}\n ${req.body.message}`,
   };

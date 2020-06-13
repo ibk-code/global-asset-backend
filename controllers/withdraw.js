@@ -5,22 +5,20 @@ const nodeMailer =  require('nodemailer');
 
 exports.Withdraw = (req, res, next) => {
     const userId = req.body.id;
-    console.log(userId)
     UserSignUp.findById(userId)
         .then(obj => {
-            console.log(obj)
             let transporter = nodeMailer.createTransport({
-                host: "smtp.mailtrap.io",
-                port: 2525,
+                host: "smtp.zoho.com",
+                port: 465,
                 auth: {
-                  user: "0a7e532c27433a",
-                  pass: "4012f61639b2eb"
+                  user: "admin@theglobalasset.com",
+                  pass: "Globalasset@2020"
                 }
             });
     
             const mailOptions = {
-                from: '438e1da98e-5755d0@inbox.mailtrap.io',
-                to: '438e1da98e-5755d0@inbox.mailtrap.io',
+                from: '"theglobalasset" admin@theglobalasset.com',
+                to: "admin@theglobalasset.com",
                 subject: 'Withdrawl Message',
                 text: `Withdrawl request of ${req.body.amount} from user ${obj.name} with ${obj._id} with email address of ${obj.email} into wallet address of ${req.body.address}, with registered wallet address of ${obj.btcId}`
             };

@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const AdminLogin = require('../models/adminSchema');
 const jwt = require('jsonwebtoken');
 
-exports.signup = async (name, email, pass) => {
+exports.signup = (name, email, pass) => {
     bcrypt.hash(pass, 10)
         .then(
             (hash) => {
@@ -22,16 +22,16 @@ exports.signup = async (name, email, pass) => {
 exports.login = (req, res, next) => {
     AdminLogin.findOne({email: req.body.email}).then(
         (user) => {
-            if(!user){
-                return res.status(401).json({
+            if(user === null){
+                return res.status(400).json({
                     message: "email or password is incorrect"
                 })
             }
             bcrypt.compare(req.body.password, user.password).then(
                 (valid) => {
                     if(!valid) {
-                        return res.status("401").json({
-                            error: new Error("Incorrect password try again")
+                        res.status(401).json({
+                            message: "Incorrect password try again"
                         })
                     }
                     const token = jwt.sign(
