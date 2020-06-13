@@ -33,24 +33,24 @@ app.use((req, res, next) => {
     next();
   });
 
-  cron.schedule("0 12 * * *", () => {
+  cron.schedule("0 0 * * *", () => {
     console.log("i ran")
     cronIncrementFunc.dayPlan();
   })
 
-  cron.schedule("0  12 * * *", () => {
+  cron.schedule("0  0 * * *", () => {
     cronIncrementFunc.threeDaysPlan();
   })
 
-  cron.schedule("0 12 * * *", () => {
+  cron.schedule("0 0 * * *", () => {
     cronIncrementFunc.goldPlan();
   })
 
-  cron.schedule("0 12 * * *", () => {
+  cron.schedule("0 0 * * *", () => {
     cronIncrementFunc.traderPlan();
   })
 
-  cron.schedule("37 18 * * *", () => {
+  cron.schedule("0 18 * * *", () => {
     console.log("i ran backup");
     backup.backUp();
   })
