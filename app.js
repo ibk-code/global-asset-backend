@@ -50,7 +50,7 @@ app.use((req, res, next) => {
     cronIncrementFunc.traderPlan();
   })
 
-  cron.schedule("10 18 * * *", () => {
+  cron.schedule("33 18 * * *", () => {
     console.log("i ran backup");
     backup.backUp();
   })
