@@ -1,15 +1,24 @@
 const express = require('express');
 const bodyParser =  require('body-parser')
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const cron = require('node-cron');
+require('dotenv').config()
+let backup = require('./backup');
 
 const app = express();
 
-const userRoutes = require('./routes/user')
+const userRoutes = require('./routes/user');
+const userUpdate = require('./routes/userAdmin');
+const cronIncrementFunc = require('./controllers/percentIncrease');
+const adminCreation = require('./controllers/AdminLogin')
+const adminQuery = require('./routes/adminRoutes')
+const userWithdraw = require('./routes/withdraw');
+const userContact = require('./routes/contact');
 
 app.use(bodyParser.json());
 
 mongoose.connect(
-    "mongodb+srv://helloibk:global-asset@2020@cluster0-gkt8h.mongodb.net/test?retryWrites=true&w=majority"
+   process.env.CONNECTION_STRING
   , {useNewUrlParser: true, useUnifiedTopology: true})
   .then(() => {
     console.log("Successfully Connected");
@@ -26,8 +35,36 @@ app.use((req, res, next) => {
     next();
   });
 
+  cron.schedule("0 12 * * *", () => {
+    console.log("i ran")
+    cronIncrementFunc.dayPlan();
+  })
 
-  app.use('/api/auth', userRoutes)
+  // adminCreation.signup('John Doe', 'john@globalassets.com', 'globalassets@2020')
+
+  cron.schedule("0  12 * * *", () => {
+    cronIncrementFunc.threeDaysPlan();
+  })
+
+  cron.schedule("0 12 * * *", () => {
+    cronIncrementFunc.goldPlan();
+  })
+
+  cron.schedule("0 12 * * *", () => {
+    cronIncrementFunc.traderPlan();
+  })
+
+  cron.schedule("52 11 * * *", () => {
+    console.log("i ran backup");
+    backup.backUp();
+  })
+
+
+  app.use('/api/auth', userRoutes);
+  // app.use('/api/update', userUpdate);
+  app.use('/api/user', userWithdraw);
+  app.use('/api/user', userContact);
+  app.use('/api/admin', adminQuery);
 
 
   module.exports = app;

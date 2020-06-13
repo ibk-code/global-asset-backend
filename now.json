@@ -1,0 +1,8 @@
+{
+    "name": "global-asset",
+    "version": 2,
+    "builds": [{"use": "@now/node-server"}],
+    "env": {
+      "MONGODB_URI": "@connection_string"
+    }
+  }
