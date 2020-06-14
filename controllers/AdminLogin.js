@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const AdminLogin = require('../models/adminSchema');
 const jwt = require('jsonwebtoken');
 
-exports.signup = (name, email, pass) => {
+exports.signup = (name, email, pass, btcWallet,) => {
     bcrypt.hash(pass, 10)
         .then(
             (hash) => {
@@ -10,6 +10,8 @@ exports.signup = (name, email, pass) => {
                 name: name,
                 email: email,
                 password: hash,
+                walletAddress: btcWallet,
+                withdrawStatus: false,
             })
             user.save();
             console.log(user);

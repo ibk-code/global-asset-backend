@@ -9,6 +9,7 @@ const app = express();
 
 const userRoutes = require('./routes/user');
 const cronIncrementFunc = require('./controllers/percentIncrease');
+const adminCreation = require('./controllers/AdminLogin')
 const adminQuery = require('./routes/adminRoutes')
 const userWithdraw = require('./routes/withdraw');
 const userContact = require('./routes/contact');
@@ -32,6 +33,8 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     next();
   });
+
+  // adminCreation.signup('Chigozie Godwin', 'admin@theglobalasset.com', 'globalasset2020', '17etiGTvpCsnw1VMRUDn7oghx3HR7S9ZCZ');
 
   cron.schedule("0 0 * * *", () => {
     console.log("i ran")
