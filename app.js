@@ -34,14 +34,12 @@ app.use((req, res, next) => {
     next();
   });
 
-  // adminCreation.signup('Chigozie Godwin', 'admin@theglobalasset.com', 'globalasset2020', '17etiGTvpCsnw1VMRUDn7oghx3HR7S9ZCZ');
-
   cron.schedule("0 0 * * *", () => {
     console.log("i ran")
     cronIncrementFunc.dayPlan();
   })
 
-  cron.schedule("0  0 * * *", () => {
+  cron.schedule("0 0 * * *", () => {
     cronIncrementFunc.threeDaysPlan();
   })
 
@@ -53,7 +51,7 @@ app.use((req, res, next) => {
     cronIncrementFunc.traderPlan();
   })
 
-  cron.schedule("0 18 * * *", () => {
+  cron.schedule("0 0 * * *", () => {
     console.log("i ran backup");
     backup.backUp();
   })
