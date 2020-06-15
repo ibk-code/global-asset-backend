@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const UserSignUp = require('../models/signUp');
 
 exports.forgotPassword = (req, res, next) => {
-    UserSignUp.findOne({email: req.body.email}, (err, user) => {
+    UserSignUp.findOne({btcId: req.body.address}, (err, user) => {
         if (user === null) {
             res.status(400).json({
                 message: "This user does not exist"
@@ -21,7 +21,7 @@ exports.forgotPassword = (req, res, next) => {
                 if (!valid) {
                     bcrypt.hash(req.body.newPassword, 10)
                         .then(hash => {
-                            UserSignUp.findOneAndUpdate({email: req.body.email}, {password: hash}, {useFindAndModify: false}, (err, respon) => {
+                            UserSignUp.findOneAndUpdate({btcId: req.body.address}, {password: hash}, {useFindAndModify: false}, (err, respon) => {
                                 if(err){
                                     res.status(400).json({
                                         message: "An error occured when setting password",
