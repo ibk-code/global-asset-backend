@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const UserSignUp = require('../models/signUp');
 const referralFunc = require('./Referred');
 const jwt = require('jsonwebtoken');
+const signUpVerfication = require('./signUpConfirmation')
 
 exports.signup = async (req, res, next) => {
     bcrypt.hash(req.body.password, 10)
@@ -13,13 +14,13 @@ exports.signup = async (req, res, next) => {
 
             const user = new UserSignUp({
                 name: req.body.name,
+                userName: req.body.username,
                 email: req.body.email,
                 password: hash,
-                btcId: req.body.btcId,
-                plan: req.body.plan,
+                plan: " ",
                 referralCount: 0,
-                btcBalance: '0.0000',
-                "status.deposit": '0.0000',
+                balance: '0.00',
+                "status.deposit": '0.00',
                 "status.lastIncrementedTime": Date.now(),
                 "status.referralBonus": 0
             })
@@ -35,15 +36,16 @@ exports.signup = async (req, res, next) => {
                                 message: "Account creation was, successful",
                                 userId: user._id,
                                 plan: user.plan,
-                                walletAddress: user.btcId,
                                 name: user.name,
+                                username: user.userName,
                                 email: user.email,
-                                btcBalance: user.btcBalance,
+                                balance: user.balance,
                                 referrals: user.referralCount,
                                 deposit: user.status.deposit,
                                 token: token
                         });
                         console.log("I ran signup")
+                        signUpVerfication.signUpConfirmation(user.email)
                     }
                 ).catch(e => {
                     res.status(400).json({
@@ -84,10 +86,10 @@ exports.login = (req, res, next) => {
                                 message: "Account Login was, successful",
                                 userId: user._id,
                                 plan: user.plan,
-                                walletAddress: user.btcId,
                                 name: user.name,
+                                username: user.userName,
                                 email: user.email,
-                                btcBalance: user.btcBalance,
+                                balance: user.balance,
                                 referrals: user.referralCount,
                                 deposit: user.status.deposit,
                                 token: token
