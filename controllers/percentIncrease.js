@@ -1,7 +1,7 @@
 const UserSignUp = require('../models/signUp')
 
 const increasePerHour = (id, balc) => {
-    UserSignUp.findByIdAndUpdate(id, {btcBalance: balc}, { useFindAndModify: false }, (err, res) => {
+    UserSignUp.findByIdAndUpdate(id, {balance: balc}, { useFindAndModify: false }, (err, res) => {
         if (err) {
             console.log(err);
         }else{
@@ -11,7 +11,7 @@ const increasePerHour = (id, balc) => {
 }
 
 const increasePerDays = (id, balc, updatedDate) => {
-    UserSignUp.findByIdAndUpdate(id, {$set: {btcBalance: balc, "status.lastIncrementedTime": updatedDate}}, { useFindAndModify: false }, (err, res) => {
+    UserSignUp.findByIdAndUpdate(id, {$set: {balance: balc, "status.lastIncrementedTime": updatedDate}}, { useFindAndModify: false }, (err, res) => {
         if (err) {
             console.log(err);
         }else{
@@ -26,8 +26,8 @@ exports.dayPlan = () => {
             arr.forEach((e) => {
                 const {status: {deposit}} = e;
                 const percent = 7/100 * Number(deposit);
-                const {btcBalance} = e;
-                const newBalance = (Number(btcBalance) + percent).toFixed(4);
+                const {balance} = e;
+                const newBalance = (Number(balance) + percent).toFixed(2);
                 const balcString = newBalance.toString()
                 increasePerHour(e._id, balcString)
             })
@@ -48,8 +48,8 @@ exports.threeDaysPlan = () => {
                 if (pastDate === 3) {
                     const {status: {deposit}} = e;
                     const percent = 25/100 * Number(deposit);
-                    const {btcBalance} = e;
-                    const newBalance = (Number(btcBalance) + percent).toFixed(4);
+                    const {balance} = e;
+                    const newBalance = (Number(balance) + percent).toFixed(2);
                     const balcString = newBalance.toString();
                     increasePerDays(e._id, balcString, Date.now())
                 }else{
@@ -66,8 +66,8 @@ exports.goldPlan = () => {
             arr.forEach((e) => {
                 const {status: {deposit}} = e;
                 const percent = 20/100 * Number(deposit);
-                const {btcBalance} = e;
-                const newBalance = (Number(btcBalance) + percent).toFixed(4);
+                const {balance} = e;
+                const newBalance = (Number(balance) + percent).toFixed(2);
                 const balcString = newBalance.toString();
                 increasePerHour(e._id, balcString)
             })
@@ -88,8 +88,8 @@ exports.traderPlan = () => {
                 if (pastDate === 21) {
                     const {status: {deposit}} = e;
                     const percent = 80/100 * Number(deposit);
-                    const {btcBalance} = e;
-                    const newBalance = (Number(btcBalance) + percent).toFixed(4);
+                    const {balance} = e;
+                    const newBalance = (Number(balance) + percent).toFixed(2);
                     const balcString = newBalance.toString();
                     increasePerDays(e._id, balcString, Date.now())
                 }else{

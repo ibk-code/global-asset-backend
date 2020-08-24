@@ -15,6 +15,8 @@ const userSchema = mongoose.Schema({
   plan: {type: String, required: true},
   password: { type: String, required: true },
   referralCount: {type: Number},
+  country: {type: String},
+  withdraw: {type: Boolean},
   balance: {type: String},
   status: btcStatus,
   createdAt: {type: Date, default: Date.now()}

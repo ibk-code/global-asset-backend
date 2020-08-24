@@ -12,6 +12,7 @@ const cronIncrementFunc = require('./controllers/percentIncrease');
 const adminCreation = require('./controllers/AdminLogin')
 const adminQuery = require('./routes/adminRoutes')
 const userWithdraw = require('./routes/withdraw');
+const userDeposit = require('./routes/deposit');
 const userContact = require('./routes/contact');
 
 app.use(bodyParser.json());
@@ -34,20 +35,20 @@ app.use((req, res, next) => {
     next();
   });
 
-  cron.schedule("0 0 * * *", () => {
+  cron.schedule("7 10 * * *", () => {
     console.log("i ran")
     cronIncrementFunc.dayPlan();
   })
 
-  cron.schedule("0 0 * * *", () => {
+  cron.schedule("0 10 * * *", () => {
     cronIncrementFunc.threeDaysPlan();
   })
 
-  cron.schedule("0 0 * * *", () => {
+  cron.schedule("0 10 * * *", () => {
     cronIncrementFunc.goldPlan();
   })
 
-  cron.schedule("0 0 * * *", () => {
+  cron.schedule("0 10 * * *", () => {
     cronIncrementFunc.traderPlan();
   })
 
@@ -60,6 +61,7 @@ app.use((req, res, next) => {
   app.use('/api/auth', userRoutes);
   // app.use('/api/update', userUpdate);
   app.use('/api/user', userWithdraw);
+  app.use('/api/user', userDeposit);
   app.use('/api/user', userContact);
   app.use('/api/admin', adminQuery);
 

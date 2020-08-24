@@ -16,8 +16,10 @@ exports.signup = async (req, res, next) => {
                 name: req.body.name,
                 userName: req.body.username,
                 email: req.body.email,
+                country: req.body.country,
                 password: hash,
                 plan: " ",
+                withdraw: false,
                 referralCount: 0,
                 balance: '0.00',
                 "status.deposit": '0.00',
@@ -36,8 +38,10 @@ exports.signup = async (req, res, next) => {
                                 message: "Account creation was, successful",
                                 userId: user._id,
                                 plan: user.plan,
+                                withdraw: user.withdraw,
+                                country: user.country,
                                 name: user.name,
-                                username: user.userName,
+                                userName: user.userName,
                                 email: user.email,
                                 balance: user.balance,
                                 referrals: user.referralCount,
@@ -49,14 +53,14 @@ exports.signup = async (req, res, next) => {
                     }
                 ).catch(e => {
                     res.status(400).json({
-                        message: e.message
+                        message: "Please fill all the fieldn or user already exist"
                     })
                 })
         })
         .catch(e => {
             console.log(e)
             res.status(400).json({
-                message: e.message
+                message: "The check your details or the user already exist"
             })
         })
 }
@@ -86,11 +90,14 @@ exports.login = (req, res, next) => {
                                 message: "Account Login was, successful",
                                 userId: user._id,
                                 plan: user.plan,
+                                withdraw: user.withdraw,
+                                country: user.country,
                                 name: user.name,
-                                username: user.userName,
+                                userName: user.userName,
                                 email: user.email,
                                 balance: user.balance,
                                 referrals: user.referralCount,
+                                withdraw: user.withdraw,
                                 deposit: user.status.deposit,
                                 token: token
                             });
