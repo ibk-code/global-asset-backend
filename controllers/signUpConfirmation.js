@@ -10,19 +10,19 @@ let transporter = nodeMailer.createTransport({
   },
 });
 
-exports.signUpConfirmation = (email) => {
-      const mailOptions = {
-        from: '"theglobalasset" admin@theglobalasset.com',
-        to: email,
-        subject: "Email Confirmation",
-        html: `<p>click on the link to confirm your email address <a href="http://localhost:3000/signin"> Confirm your email</a></p>`
-      };
-  
-      transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-          console.log(error);
-        } else {
-          console.log(info);
-        }
-      });
+exports.signUpConfirmation = (email, user, username, password) => {
+  const mailOptions = {
+    from: '"theglobalasset" admin@theglobalasset.com',
+    to: email,
+    subject: "Email Confirmation",
+    html: `Congratulation ${user}. You have signed up to theglobalasset.com with <br/> the username ${username} and password ${password}. please copy the link to your browser <br/> <b>http://www.theglobalasset.com/signin<b>.`,
+  };
+
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log(info);
+    }
+  });
 };

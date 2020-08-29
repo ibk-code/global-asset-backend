@@ -8,6 +8,7 @@ const queryAdmin = require("../controllers/adminupdate");
 
 router.post("/user", adminCtrl.singleUser);
 router.get("/allusers", adminCtrl.userQuery);
+router.get("/adminaddress", adminCtrl.queryAdminAddress);
 router.post("/login", adminLogin.login);
 router.put("/updatebtc", updateUserBtc.UpdateBalance);
 router.put("/updateplan", updateUserBtc.UpdatePlan);

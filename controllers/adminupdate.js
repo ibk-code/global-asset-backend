@@ -9,7 +9,9 @@ exports.queryAdminWallet = (req, res, next) => {
       return;
     } else {
       res.status(200).json({
-        adminWallet: user.walletAddress,
+        btcAddress: user.btcAddress,
+        ethereumAddress: user.ethereumAddress,
+        perfectMoney: user.perfectMoney,
       });
     }
   });
@@ -37,6 +39,7 @@ exports.updateAdminWallet = (req, res, next) => {
               message: "walletAddress is updated successfully",
               btcAddress: resp.btcAddress,
               ethereumAddress: resp.ethereumAddress,
+              perfectMoney: resp.perfectMoney,
             });
           }
         }

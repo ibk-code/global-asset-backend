@@ -1,4 +1,5 @@
 const UserSignUp = require("../models/signUp");
+const AdminSchema = require("../models/adminSchema");
 
 exports.userQuery = (req, res) => {
   UserSignUp.find({}, "_id name userName email withdraw")
@@ -10,6 +11,30 @@ exports.userQuery = (req, res) => {
       } else {
         res.status(200).json({
           message: "All user",
+          users: obj,
+        });
+      }
+    })
+    .catch((e) => {
+      res.status(400).json({
+        message: "An error occured",
+      });
+    });
+};
+
+exports.queryAdminAddress = (req, res) => {
+  AdminSchema.find(
+    { email: "admin@theglobalasset.com" },
+    "btcAddress ethereumAddress"
+  )
+    .then((obj) => {
+      if (obj === null) {
+        res.status(400).json({
+          message: "admin not found",
+        });
+      } else {
+        res.status(200).json({
+          message: "Admin Address",
           users: obj,
         });
       }

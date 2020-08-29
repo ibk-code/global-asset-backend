@@ -2,7 +2,14 @@ const bcrypt = require("bcrypt");
 const AdminLogin = require("../models/adminSchema");
 const jwt = require("jsonwebtoken");
 
-exports.signup = (name, email, pass, btcAddress, ethereumAddress) => {
+exports.signup = (
+  name,
+  email,
+  pass,
+  btcAddress,
+  ethereumAddress,
+  perfectMoney
+) => {
   bcrypt
     .hash(pass, 10)
     .then((hash) => {
@@ -12,6 +19,7 @@ exports.signup = (name, email, pass, btcAddress, ethereumAddress) => {
         password: hash,
         btcAddress: btcAddress,
         ethereumAddress: ethereumAddress,
+        perfectMoney: perfectMoney,
       });
       user.save();
       console.log(user);

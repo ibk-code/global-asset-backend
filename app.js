@@ -44,19 +44,19 @@ app.use((req, res, next) => {
 
 cron.schedule("7 10 * * *", () => {
   console.log("i ran");
-  cronIncrementFunc.dayPlan();
+  cronIncrementFunc.beginnerPlan();
 });
 
 cron.schedule("0 10 * * *", () => {
-  cronIncrementFunc.threeDaysPlan();
+  cronIncrementFunc.intermediatePlan;
 });
 
 cron.schedule("0 10 * * *", () => {
-  cronIncrementFunc.goldPlan();
+  cronIncrementFunc.advancePlan();
 });
 
 cron.schedule("0 10 * * *", () => {
-  cronIncrementFunc.traderPlan();
+  cronIncrementFunc.proPlan();
 });
 
 cron.schedule("0 0 * * *", () => {
@@ -69,7 +69,8 @@ cron.schedule("0 0 * * *", () => {
 //   "admin@theglobalasset.com",
 //   "globalasset@2020",
 //   "63dhguy38873983",
-//   "7278387guuwy828"
+//   "7278387guuwy828",
+//   "weiodhsj30304509"
 // );
 
 app.use("/api/auth", userRoutes);
